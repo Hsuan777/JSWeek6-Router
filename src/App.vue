@@ -1,15 +1,44 @@
+
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/products">Products</router-link>｜
-      <router-link to="/login">Login</router-link> 
-    </div>
-    <router-view/>
+    <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-white">
+      <div class="container">
+        <router-link to="/" class="navbar-brand text-primary">HexHotel</router-link>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <router-link to="/" class="nav-link">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/products" class="nav-link">預定房間</router-link>
+            </li>
+            <li class="nav-item ml-auto">
+              <router-link to="/login" class="nav-link">Login</router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <router-view />
   </div>
 </template>
 
 <style lang="scss">
+// @import './assets/styles/main.scss';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
