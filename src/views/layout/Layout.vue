@@ -19,23 +19,43 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <router-link to="/admin/products" class="nav-link">管理房間</router-link>
+              <router-link to="/" class="nav-link">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/products" class="nav-link">預定房間</router-link>
+            </li>
+            <li class="nav-item ml-auto">
+              <router-link to="/login" class="nav-link">Login</router-link>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <router-view />
+    <router-view/>
   </div>
 </template>
 
-<script type="module">
-export default {
-  created () {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-    if (token === '') {
-      this.$router.push('/')
+<style lang="scss">
+// @import './assets/styles/main.scss';
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
     }
-  },
-};
-</script>
+  }
+}
+</style>

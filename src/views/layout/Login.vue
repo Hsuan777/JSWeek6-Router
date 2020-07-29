@@ -60,20 +60,20 @@
 
 <script >
 export default {
-  data() {
+  data () {
     return {
       user: {
         email: '',
         password: ''
-      },
-    };
+      }
+    }
   },
   methods: {
-    login(e) {
+    login (e) {
       const vm = this;
       e.preventDefault();
-      axios
-        .post(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/auth/login`, this.user)
+      vm.axios
+        .post(`${process.env.VUE_APP_APIPATH}auth/login`, this.user)
         .then((res) => {
           // 1. 送出驗證資訊後，驗證完畢取得 token以及到期日(expired)
           const token = res.data.token;
@@ -83,18 +83,18 @@ export default {
           // someCookieName可自定義，true改成 傳送回來的 token
           // 到期日則是用 new Data()的方式
           document.cookie = `hexToken=${token}; expires=${new Date(expired * 1000)}; path=/`;
-          //清空
+          // 清空
           vm.user.email = '';
           vm.user.password = '';
           // $route是屬性
           // $router是方法
           // window.location = "products.html";
-          this.$router.push('products') //暫時回產品頁
+          this.$router.push('admin/products') // 暫時回產品頁
         })
         .catch((error) => {
           console.log(error);
         })
     }
   }
-};
+}
 </script>

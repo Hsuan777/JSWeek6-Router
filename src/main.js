@@ -1,34 +1,27 @@
 import Vue from 'vue'
+import App from './App.vue'
 import 'bootstrap'
+import './assets/styles/main.scss'
+/* 套件 */
+// axios，AJAX套件
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import App from './App.vue'
+// router，管理/建立網頁路由
 import router from './router'
-import './assets/styles/main.scss'
+// loading，讀取特效
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
-import { required } from 'vee-validate/dist/rules'
+// vee-validate，表單驗證
+import Validate from './assets/js/validate.js'
 
 Vue.config.productionTip = false
 
-// 加入到原型
+// 將套件加入到原型或者作為元件
 Vue.use(VueAxios, axios)
 
-Vue.component('loading', Loading)
+Vue.use(Validate)
 
-Vue.component('ValidationProvider', ValidationProvider)
-Vue.component('ValidationObserver', ValidationObserver)
-extend('required', {
-  ...required,
-  message: 'This field is required'
-})
-// VeeValidate.configure({
-//   classes: {
-//     valid: 'is-valid',
-//     invalid: 'is-invalid'
-//   }
-// })
+Vue.component('loading', Loading)
 
 new Vue({
   router,

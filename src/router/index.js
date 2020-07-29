@@ -5,24 +5,51 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
+  /* 原本對照，這裡的 .vue檔案內容會經由 APP.vue的 router-view顯示 */
+  // {
+  //   path: '/',
+  //   name: 'Home',
+  //   component: () => import('../views/layout/Home.vue')
+  // },
+  // {
+  //   path: '/products',
+  //   name: 'Products',
+  //   component: () => import('../views/layout/Products.vue')
+  // },
+  // {
+  //   path: '/login',
+  //   name: 'Login',
+  //   component: () => import('../views/layout/Login.vue')
+  // },
+  // {
+  //   path: '/',
+  //   name: 'Home',
+  //   component: () => import('../views/layout/Home.vue')
+  // },
+  /* 前後台分開 */
   {
     path: '/',
-    name: 'Home',
-    component: () => import('../views/Home.vue')
-  },
-  {
-    path: '/products',
-    name: 'Products',
-    component: () => import('../views/Products.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/layout/Layout.vue'), // APP.vue的 router-view顯示 Layout.vue的內容
+    // component: () => import('../views/layout/Home.vue'),
+    children: [
+      // 當回到首頁時，Home.vue的內容也會經由 router-view顯示
+      {
+        path: '/',
+        component: () => import('../views/layout/Home.vue')
+      },
+      {
+        path: 'products',
+        component: () => import('../views/layout/Products.vue')
+      },
+      {
+        path: 'login',
+        component: () => import('../views/layout/Login.vue')
+      }
+    ]
   },
   {
     path: '/admin',
-    component: () => import('../views/dashboard/Dashboard.vue'),
+    component: () => import('../views/dashboard/Dashboard.vue'), // APP.vue的 router-view顯示 Dashboard.vue的內容
     children: [
       {
         path: 'products',
