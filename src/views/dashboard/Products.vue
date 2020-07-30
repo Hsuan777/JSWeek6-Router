@@ -305,117 +305,109 @@ export default {
       temporary: {}
     }
   },
+  props: ['token'],
   methods: {
     // 功能類 //
     signout (e) {
-      e.preventDefault();
+      e.preventDefault()
       // 將存放在瀏覽器的 cookie清空
-      document.cookie = 'hexToken=; expires=; path=/';
-      this.hexAPI.data = [];
-      // window.location = "index.html";
-      this.$router.push('/');
+      document.cookie = 'hexToken=; expires=; path=/'
+      this.hexAPI.data = []
+      // window.location = "index.html"
+      this.$router.push('/')
     },
     /* 取得遠端 API資料 */
     // 預設為 1
     getData (page = 1) {
-      const vm = this;
+      const vm = this
       // vm.axios的驗證指令，Bearer是後端用的
-      const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-      vm.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      // const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1')
+      vm.axios.defaults.headers.common.Authorization = `Bearer ${vm.token}`
       vm.axios
         // 原本是 products ->最終結果是取得所有資料
         // 改成 products?page=${page} -> 由後端給第一頁資料
         .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/products?page=${page}`)
         .then((res) => {
           // 取得該頁資料
-          vm.hexAPI.data = res.data.data;
-
+          vm.hexAPI.data = res.data.data
           // 取得分頁資訊
-          vm.pagination = res.data.meta.pagination;
-        });
+          vm.pagination = res.data.meta.pagination
+        })
     },
     /* 新增資料 */
     addProduct () {
-      const vm = this;
-      const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-      vm.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const vm = this
+      // const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1')
+      vm.axios.defaults.headers.common.Authorization = `Bearer ${vm.token}`
       vm.axios
         .post(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product`, vm.temporary)
         .then(() => {
-          vm.getData();
-        });
+          vm.getData()
+        })
     },
     /* 新建資料 */
     // 將 this.product的屬性值複製到暫存
     initData () {
-      this.temporary = Object.assign({}, this.product);
+      this.temporary = Object.assign({}, this.product)
     },
     /* 複製資料 */
     // 將 v-for所取出的 item放入暫存
     copyData (item) {
-      const vm = this;
-      // TODO:會有非同步的問題，造成點擊時沒讀到資料
-      const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-      vm.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const vm = this
+      vm.axios.defaults.headers.common.Authorization = `Bearer ${vm.token}`
       vm.axios
         .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product/${item.id}`)
         .then((res) => {
-          this.temporary = Object.assign({}, res.data.data);
-        });
-
-      // this.temporary = Object.assign({}, res.data.data);
+          this.temporary = Object.assign({}, res.data.data)
+        })
     },
     /* 修改資料 */
     updateData () {
-      const vm = this;
+      const vm = this
       // if判斷，若有值則為 true
       if (vm.temporary.id) {
         vm.hexAPI.data.forEach((item) => {
           if (vm.temporary.id === item.id) {
-            const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-            vm.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+            vm.axios.defaults.headers.common.Authorization = `Bearer ${vm.token}`
             // patch跟 post一樣需要兩個參數 patch(`API網址`, 單一物件資料)，否則不會變更
             vm.axios
               .patch(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product/${vm.temporary.id}`, vm.temporary)
               .then(() => {
-                vm.getData();
-                vm.cleanDate();
-              });
+                vm.getData()
+                vm.cleanDate()
+              })
           }
         })
       } else {
-        vm.addProduct();
+        vm.addProduct()
       }
-      vm.cleanDate();
+      vm.cleanDate()
     },
     /* 刪除資料 */
     deleteData () {
-      const vm = this;
+      const vm = this
       vm.hexAPI.data.forEach((item) => {
         if (vm.temporary.id === item.id) {
-          const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-          vm.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+          vm.axios.defaults.headers.common.Authorization = `Bearer ${vm.token}`
           vm.axios
             .delete(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product/${vm.temporary.id}`)
             .then(() => {
-              vm.getData();
-              vm.cleanDate();
-            });
+              vm.getData()
+              vm.cleanDate()
+            })
         }
       })
     },
     // 工具類 //
     cleanDate () {
-      this.temporary = {};
+      this.temporary = {}
     }
   },
   created () {
     // 取出 token 名稱，若為空值則跳回 login.html，防止直接進 products.html
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-    if (token === '') {
-       this.$router.push('/');
-    }
-    this.getData();
+    // 由於 Dashboard.vue的 <router-view :token="token.api_token" v-if="checkSucces" />影響
+    // 若 v-if="checkSucces" 為 false，不會將頁面導入
+    this.getData()
   }
 }
 </script>

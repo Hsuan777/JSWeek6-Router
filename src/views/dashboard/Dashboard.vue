@@ -25,17 +25,41 @@
         </div>
       </div>
     </nav>
-    <router-view />
+    <!-- router-link的頁面會被放入 router-view -->
+    <router-view :token="token.api_token" v-if="checkSucces" />
   </div>
 </template>
 
-<script type="module">
+<script>
 export default {
-  created () {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-    if (token === '') {
-      this.$router.push('/')
+  data () {
+    return {
+      token: {
+        api_token: ''
+      },
+      checkSucces: false
     }
   },
-};
+  created () {
+    this.checkToken()
+  },
+  methods: {
+    checkToken () {
+      const vm = this
+      // eslint-disable-next-line
+      vm.token.api_token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1')
+      if (vm.token.api_token === '') {
+        vm.$router.push('/')
+      } else {
+        vm.axios.defaults.headers.common.Authorization = `Bearer ${vm.token}`
+        vm.axios
+          .post(`${process.env.VUE_APP_APIPATH}auth/check`, vm.token)
+          .then((res) => {
+            vm.checkSucces = true
+          })
+          .catch(() => vm.$router.push('/'))
+      }
+    }
+  }
+}
 </script>

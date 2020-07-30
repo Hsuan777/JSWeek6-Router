@@ -42,6 +42,14 @@ const routes = [
         component: () => import('../views/layout/Products.vue')
       },
       {
+        path: 'product/:id',
+        component: () => import('../views/layout/Product.vue')
+      },
+      {
+        path: 'payment',
+        component: () => import('../views/layout/Payment.vue')
+      },
+      {
         path: 'login',
         component: () => import('../views/layout/Login.vue')
       }
@@ -51,6 +59,10 @@ const routes = [
     path: '/admin',
     component: () => import('../views/dashboard/Dashboard.vue'), // APP.vue的 router-view顯示 Dashboard.vue的內容
     children: [
+      {
+        path: '/',
+        component: () => import('../views/dashboard/Products.vue')
+      },
       {
         path: 'products',
         component: () => import('../views/dashboard/Products.vue')

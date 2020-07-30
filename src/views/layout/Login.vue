@@ -58,7 +58,7 @@
   </section>
 </template>
 
-<script >
+<script>
 export default {
   data () {
     return {
@@ -70,29 +70,29 @@ export default {
   },
   methods: {
     login (e) {
-      const vm = this;
-      e.preventDefault();
+      const vm = this
+      e.preventDefault()
       vm.axios
         .post(`${process.env.VUE_APP_APIPATH}auth/login`, this.user)
         .then((res) => {
           // 1. 送出驗證資訊後，驗證完畢取得 token以及到期日(expired)
-          const token = res.data.token;
-          const expired = res.data.expired;
+          const token = res.data.token
+          const expired = res.data.expired
           // 2. 取得上述的值後，就把它們存在 cookie，以便使用者在期限內再次登入
           // 參考 document.cookie MDN
           // someCookieName可自定義，true改成 傳送回來的 token
           // 到期日則是用 new Data()的方式
-          document.cookie = `hexToken=${token}; expires=${new Date(expired * 1000)}; path=/`;
+          document.cookie = `hexToken=${token}; expires=${new Date(expired * 1000)}; path=/`
           // 清空
-          vm.user.email = '';
-          vm.user.password = '';
+          vm.user.email = ''
+          vm.user.password = ''
           // $route是屬性
           // $router是方法
           // window.location = "products.html";
-          this.$router.push('admin/products') // 暫時回產品頁
+          this.$router.push('admin/products')
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error)
         })
     }
   }
