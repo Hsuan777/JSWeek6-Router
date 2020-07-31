@@ -358,7 +358,7 @@ export default {
       vm.axios
         .get(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product/${item.id}`)
         .then((res) => {
-          this.temporary = Object.assign({}, res.data.data)
+          vm.temporary = Object.assign({}, res.data.data)
         })
     },
     /* 修改資料 */
@@ -374,14 +374,14 @@ export default {
               .patch(`${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product/${vm.temporary.id}`, vm.temporary)
               .then(() => {
                 vm.getData()
-                vm.cleanDate()
+                vm.cleanData()
               })
           }
         })
       } else {
         vm.addProduct()
       }
-      vm.cleanDate()
+      vm.cleanData()
     },
     /* 刪除資料 */
     deleteData () {

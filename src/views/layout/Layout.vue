@@ -19,9 +19,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <router-link to="/" class="nav-link">Home</router-link>
-            </li>
-            <li class="nav-item">
               <router-link to="/products" class="nav-link">預定房間</router-link>
             </li>
             <li class="nav-item ml-auto">

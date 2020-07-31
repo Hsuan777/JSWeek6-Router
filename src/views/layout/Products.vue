@@ -231,6 +231,7 @@ export default {
       } else {
         // window.location = "payment.html"
         vm.$router.push('/payment')
+        $('#shoppingModal').modal('hide')
       }
     }
   },

@@ -49,7 +49,7 @@
               <small class="invalid-feedback">{{ errors[0] }}</small>
             </validation-provider>
             <validation-provider
-              rules="digits:10|required"
+              rules="min:10|required"
               v-slot="{ errors, classes }"
               tag="div"
               class="form-group"
@@ -170,7 +170,7 @@ export default {
   methods: {
     getShopping () {
       const vm = this
-      vm.isLoading = true
+      // vm.isLoading = true
       vm.axios
         .get(
           `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/ec/shopping`
@@ -182,7 +182,7 @@ export default {
             total += item.product.price
           })
           vm.shopping.moneyTotal = total
-          vm.isLoading = false
+          // vm.isLoading = false
         })
     }
   },
