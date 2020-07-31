@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0c5788"],{"3edd":function(t,e,n){"use strict";n.r(e);var c=function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("h2",{staticClass:"text-center text-primary"},[t._v(t._s(t.title))])},l=[],r={data:function(){return{title:"Welcome to HexHotel~"}}},a=r,s=n("2877"),u=Object(s["a"])(a,c,l,!1,null,null,null);e["default"]=u.exports}}]);
+//# sourceMappingURL=chunk-2d0c5788.366f29e9.js.map
